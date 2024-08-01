@@ -1,13 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './auth/user';
+import cocktailReducer from './cocktail/cocktailSlice';
 
-const makeStore = (preloadedState) => {
-  return configureStore({
-    reducer: {
-      user: userReducer,
-    },
-    preloadedState,
-  });
-};
+const store = configureStore({
+  reducer: {
+    user: userReducer,
+    cocktail: cocktailReducer,
+  },
+});
 
-export default makeStore;
+export default store;

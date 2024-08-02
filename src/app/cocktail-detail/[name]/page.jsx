@@ -5,6 +5,7 @@ import { useRouter, useParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import Navbar from "@/ui/Navbar";
 import Button from "@/ui/Button";
+import Image from "next/image";
 import { addToBasket, decreaseQuantity, increaseQuantity } from "@/lib/cocktail/cocktailSlice";
 
 const CocktailDetail = () => {
@@ -90,9 +91,11 @@ const CocktailDetail = () => {
       <div className="flex items-center justify-center bg-gradient-to-tr from-red-300 to-yellow-200 min-h-screen py-10">
         <div className="bg-white shadow-lg rounded-lg max-w-4xl w-full mx-auto flex flex-col md:flex-row">
           <div className="md:w-1/2 p-10">
-            <img
+            <Image
               src={cocktail.strDrinkThumb}
               alt={cocktail.strDrink}
+              width={500}
+              height={500}
               className="w-full h-full object-cover rounded-lg"
             />
           </div>

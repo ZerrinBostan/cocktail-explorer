@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
@@ -11,8 +11,13 @@ import {
 } from "@/lib/cocktail/cocktailSlice";
 import Button from "@/ui/Button";
 import { getCocktailDetails } from "@/services/cocktailService";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useMediaQuery } from "react-responsive";
 
 const CocktailDetail = () => {
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+
   const [cocktail, setCocktail] = useState(null);
   const router = useRouter();
   const dispatch = useDispatch();
@@ -23,6 +28,7 @@ const CocktailDetail = () => {
   const currentItem = basketItems.find(
     (item) => item.strDrink === cocktailName
   );
+
   const [quantity, setQuantity] = useState(currentItem ? currentItem.quantity : 1);
 
   useEffect(() => {
@@ -47,30 +53,26 @@ const CocktailDetail = () => {
   }, [currentItem]);
 
   const handleAddToBasket = (cocktail) => {
-    if (currentItem) {
-      dispatch(increaseQuantity(cocktail));
-    } else {
-      dispatch(addToBasket({ ...cocktail, quantity: quantity }));
-    }
-  };
+    const positionType = isMobile === true ? 'bottom-center': 'bottom-right' 
 
-  const handleIncreaseQuantity = () => {
     if (currentItem) {
       dispatch(increaseQuantity(currentItem));
     } else {
-      dispatch(addToBasket({ ...cocktail, quantity: 1 }));
+      dispatch(addToBasket({ ...cocktail, quantity: quantity }));
     }
-    setQuantity((prevQuantity) => prevQuantity + 1);
+
+    toast.success(`${cocktail.strDrink} has been added to your basket!`, {
+      position: positionType,
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      className: 'toast-custom',
+    });
   };
 
-  const handleDecreaseQuantity = () => {
-    if (quantity > 1) {
-      if (currentItem) {
-        dispatch(decreaseQuantity(currentItem));
-      }
-      setQuantity((prevQuantity) => prevQuantity - 1);
-    }
-  };
 
   const handleBackToProducts = () => {
     router.back();
@@ -86,7 +88,7 @@ const CocktailDetail = () => {
   }
 
   return (
-    <div className="bg-white shadow-lg rounded-lg max-w-4xl w-full mx-auto flex flex-col md:flex-row">
+    <div className="bg-white shadow-lg rounded-lg max-w-5xl w-full mx-auto flex flex-col md:flex-row">
       <div className="md:w-1/2 p-10">
         <Image
           src={cocktail.strDrinkThumb}
@@ -98,22 +100,8 @@ const CocktailDetail = () => {
       </div>
       <div className="md:w-1/2 p-6 flex flex-col justify-between">
         <div>
-          <div className="flex justify-between items-center mb-4">
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={handleDecreaseQuantity}
-                className="text-red-500 hover:text-red-700"
-              >
-                -
-              </button>
-              <span className="font-semibold">{quantity}</span>
-              <button
-                onClick={handleIncreaseQuantity}
-                className="text-green-500 hover:text-green-700"
-              >
-                +
-              </button>
-            </div>
+          <div className="flex justify-end items-center mb-4">
+       
             <button
               className="text-indigo-600 hover:text-indigo-500 font-medium"
               onClick={handleBackToProducts}
@@ -137,12 +125,13 @@ const CocktailDetail = () => {
           </div>
         </div>
         <Button
-          text="Sepete Ekle"
+          text="Add to Basket"
           size="medium"
-          className="mt-4"
+          className="mt-4 text-white"
           onClick={() => handleAddToBasket(cocktail)}
         />
       </div>
+      <ToastContainer />
     </div>
   );
 };

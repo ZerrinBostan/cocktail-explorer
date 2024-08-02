@@ -1,10 +1,14 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/navigation";
-import Card from "@/ui/Card";
-import { addToBasket } from "../../lib/cocktail/cocktailSlice";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/navigation';
+import { addToBasket } from '../../lib/cocktail/cocktailSlice';
+import {
+  getRandomCocktails,
+  getCocktailsBySearch,
+} from '@/services/cocktailService';
+import Card from '@/ui/Card';
 
 const Cocktails = () => {
   const dispatch = useDispatch();
@@ -13,54 +17,22 @@ const Cocktails = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const fetchRandomCocktails = async () => {
-    try {
+  useEffect(() => {
+    const fetchCocktails = async () => {
       setLoading(true);
-      const promises = Array.from({ length: 10 }, () =>
-        fetch("https://www.thecocktaildb.com/api/json/v1/1/random.php").then(
-          (response) => response.json()
-        )
-      );
-
-      const results = await Promise.all(promises);
-      const drinks = results.map((result) => result.drinks[0]);
-
-      setCocktails(drinks);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching random cocktails:", error);
-      setCocktails([]);
-      setLoading(false);
-    }
-  };
-
-  const fetchCocktailsBySearch = async (query) => {
-    try {
-      setLoading(true);
-      const response = await fetch(
-        `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${query}`
-      );
-      const data = await response.json();
-
-      if (data.drinks) {
-        setCocktails(data.drinks);
-      } else {
+      try {
+        const drinks = searchQuery
+          ? await getCocktailsBySearch(searchQuery)
+          : await getRandomCocktails();
+        setCocktails(drinks || []);
+      } catch (error) {
+        console.error('Error fetching cocktails:', error);
         setCocktails([]);
       }
       setLoading(false);
-    } catch (error) {
-      console.error("Error fetching cocktails by search:", error);
-      setCocktails([]);
-      setLoading(false);
-    }
-  };
+    };
 
-  useEffect(() => {
-    if (searchQuery) {
-      fetchCocktailsBySearch(searchQuery);
-    } else {
-      fetchRandomCocktails();
-    }
+    fetchCocktails();
   }, [searchQuery]);
 
   const isCocktails = cocktails.length > 0;
@@ -76,7 +48,7 @@ const Cocktails = () => {
   return (
     <>
       {loading && (
-        <p className="text-xl font-bold text-indigo mb-11">Yükleniyor...</p>
+        <p className="text-xl font-bold text-indigo mb-11">Loading...</p>
       )}
 
       {!loading && !searchQuery && isCocktails && (
@@ -89,7 +61,7 @@ const Cocktails = () => {
         <div>
           <div className="flex items-center justify-start">
             <p className="text-lg font-bold text-gray-800 p-4 rounded-md">
-              Kokteyl bulunamadı
+              No cocktail found
             </p>
           </div>
         </div>

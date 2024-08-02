@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { toggleConfetti } from "@/lib/cocktail/cocktailSlice";
 import { useRouter, usePathname } from "next/navigation";
 import { useMediaQuery } from "react-responsive";
+import Login from "./page";
 
 const ClientSideAuth = ({ children }) => {
   const dispatch = useDispatch();
@@ -55,7 +56,7 @@ const ClientSideAuth = ({ children }) => {
             {children}
           </div>
         ) : (
-          <div>{children}</div>
+          <div><Login /></div>
         )}
       </main>
     </>

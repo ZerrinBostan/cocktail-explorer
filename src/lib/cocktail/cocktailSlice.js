@@ -4,6 +4,7 @@ const initialState = {
   searchQuery: '',
   basket: [],
   savedCocktails: [],
+  showConfetti: false,
 };
 
 const cocktailSlice = createSlice({
@@ -44,6 +45,9 @@ const cocktailSlice = createSlice({
         );
       }
     },
+    toggleConfetti: (state, action) => {
+      state.showConfetti = action.payload;
+    },
   },
 });
 
@@ -53,6 +57,7 @@ export const {
   removeFromBasket,
   increaseQuantity,
   decreaseQuantity,
+  toggleConfetti
 } = cocktailSlice.actions;
 
 export default cocktailSlice.reducer;

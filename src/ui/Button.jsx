@@ -7,14 +7,14 @@ const sizeClasses = {
   large: 'px-5 py-3 text-base',
 };
 
-const Button = ({ text, size = 'medium', className = '', onClick}) => {
+const Button = ({ text, size = 'medium', className = '', onClick }) => {
   const sizeClass = sizeClasses[size] || sizeClasses.medium;
 
   return (
     <button
-      className={`w-full ${sizeClass} font-bold leading-none text-white transition duration-300 rounded-2xl hover:bg-purple-blue-600 focus:ring-4 focus:ring-purple-blue-100 bg-indigo ${className}`}
+      className={`w-full ${sizeClass} font-bold leading-none text-black transition duration-300 rounded-2xl bg-indigo hover:bg-purple-blue-600 hover:text-white focus:ring-4 focus:ring-purple-blue-100 ${className}`}
       onClick={onClick}
-   >
+    >
       {text}
     </button>
   );

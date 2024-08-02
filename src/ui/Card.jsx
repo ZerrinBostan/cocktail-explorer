@@ -49,8 +49,8 @@ const Card = ({
       </div>
 
       <Button
-        text="Sepete Ekle"
-        className="mt-auto"
+        text="Add to Basket"
+        className="mt-auto text-white"
         size="small"
         onClick={(e) => {
           e.stopPropagation();

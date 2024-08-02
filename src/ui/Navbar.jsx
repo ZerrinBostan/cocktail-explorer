@@ -11,8 +11,11 @@ import Image from "next/image";
 import { setSearchQuery } from "../lib/cocktail/cocktailSlice";
 import Dropdown from "./Dropdown";
 import { logout } from "../lib/auth/user"; 
+import { useMediaQuery } from "react-responsive";
 
 const Navbar = () => {
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+
   const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useDispatch();
   const router = useRouter();
@@ -57,7 +60,7 @@ const Navbar = () => {
                 height={28}
                 priority={true}
               />
-              <p>Cocktails Explorer</p>
+                {!isMobile && <p>Cocktails Explorer</p>}
             </Link>
           </div>
           <div className="md:flex md:items-center md:justify-center md:gap-5">

@@ -15,7 +15,7 @@ const Input = ({ id, type, placeholder, value, onChange, error, showLabel = true
         value={value}
         onChange={onChange}
         className={`flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none placeholder:text-slate bg-snow text-slate rounded-2xl ${
-          error ? 'border-red-500 border-2' : 'focus:border-grey-400'
+          error ? 'border-danger border-2' : 'focus:border-grey-400'
         }`}
       />
     </div>

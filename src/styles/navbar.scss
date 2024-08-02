@@ -1,17 +1,12 @@
+$border-color: #3c4780;
+
 .cocktail-search {
-    @media (min-width: 900px) {
+    @media (min-width: 1000px) {
         input {
-            border: 1px solid #3C4780;
+            border: 1px solid $border-color;;
             min-width: 500px;
             max-width: 600px;
             width: 100%;
         }
     }
-   
 }
-
-.card {
-    width: 100%;
-    max-width: 300px;
-  }
-  

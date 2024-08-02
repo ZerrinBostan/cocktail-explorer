@@ -3,6 +3,10 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
+import { ToastContainer, toast } from 'react-toastify';
+import { useMediaQuery } from 'react-responsive';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { addToBasket } from '../../lib/cocktail/cocktailSlice';
 import {
   getRandomCocktails,
@@ -10,8 +14,12 @@ import {
 } from '@/services/cocktailService';
 import Card from '@/ui/Card';
 
+
 const Cocktails = () => {
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+
   const dispatch = useDispatch();
+
   const [cocktails, setCocktails] = useState([]);
   const searchQuery = useSelector((state) => state.cocktail.searchQuery);
   const [loading, setLoading] = useState(false);
@@ -38,7 +46,18 @@ const Cocktails = () => {
   const isCocktails = cocktails.length > 0;
 
   const handleAddToBasket = (cocktail) => {
+    const positionType = isMobile === true ? 'bottom-center': 'bottom-right' 
     dispatch(addToBasket(cocktail));
+    toast.success(`${cocktail.strDrink} has been added to your basket!`, {
+      position: positionType,
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      className: 'toast-custom',
+    });
   };
 
   const handleCardClick = (drinkName) => {
@@ -48,11 +67,13 @@ const Cocktails = () => {
   return (
     <>
       {loading && (
-        <p className="text-xl font-bold text-indigo mb-11">Loading...</p>
+        <p className="text-lg sm:text-xl font-bold text-indigo mb-4 sm:mb-11">
+          Loading...
+        </p>
       )}
 
       {!loading && !searchQuery && isCocktails && (
-        <h2 className="text-2xl font-bold mb-11 text-indigo">
+        <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-11 text-indigo">
           List Most Latest Cocktails
         </h2>
       )}
@@ -60,7 +81,7 @@ const Cocktails = () => {
       {!loading && !isCocktails && (
         <div>
           <div className="flex items-center justify-start">
-            <p className="text-lg font-bold text-gray-800 p-4 rounded-md">
+            <p className="text-base sm:text-lg font-bold text-gray-800 p-2 sm:p-4 rounded-md">
               No cocktail found
             </p>
           </div>
@@ -84,6 +105,11 @@ const Cocktails = () => {
             ))}
         </div>
       )}
+      <ToastContainer
+        toastClassName="bg-gray-800 text-white text-sm sm:text-base p-2 sm:p-4 rounded-md shadow-lg toast-custom"
+        bodyClassName="flex items-center"
+        position="bottom-center"
+      />
     </>
   );
 };

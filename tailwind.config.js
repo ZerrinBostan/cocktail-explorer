@@ -22,6 +22,7 @@ module.exports = {
         ghost: '#E9EDF7',
         iris: '#1B2559',
         slate: '#707EAE',
+        danger: '#E74B3B'
       },
     },
   },

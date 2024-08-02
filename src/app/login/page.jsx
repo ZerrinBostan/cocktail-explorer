@@ -2,15 +2,16 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useDispatch } from 'react-redux';import { login } from '../../lib/auth/user';
+import { useDispatch } from 'react-redux';
+import { login } from '../../lib/auth/user';
 import Button from '@/ui/Button';
 import Input from '@/ui/Input';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
-
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const router = useRouter();
@@ -18,24 +19,61 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null);
+
+    let hasError = false;
 
     if (!email) {
       setEmailError(true);
+      hasError = true;
+    } else {
+      setEmailError(false);
     }
+
     if (!password) {
       setPasswordError(true);
+      hasError = true;
+    } else {
+      setPasswordError(false);
     }
-    if (!email || !password) {
-      setError('Please fill out all fields.');
+
+    if (hasError) {
+      toast.error('Please fill out all fields.', {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       return;
     }
 
     if (email === 'cocktail@gmail.com' && password === '123') {
-      dispatch(login()); 
-      router.push('/cocktails');
+      dispatch(login());
+      toast.success('Login successful!', {
+        position: 'bottom-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      setTimeout(() => {
+        router.push('/cocktails');
+      }, 1000);
     } else {
-      setError('Invalid email or password.');
+      toast.error('Invalid email or password.', {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
@@ -61,25 +99,53 @@ const Login = () => {
                 type="email"
                 placeholder="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="mb-7"
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (e.target.value) {
+                    setEmailError(false);
+                  }
+                }}
+                className="mb-4"
+                onBlur={() => {
+                  if (!email) {
+                    setEmailError(true);
+                  }
+                }}
+                error={emailError === true}
               />
+              {emailError && (
+                <p className="text-left text-danger mb-5">Email is required</p>
+              )}
               <Input
                 id="password"
                 type="password"
                 placeholder="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="mb-7"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  if (e.target.value) {
+                    setPasswordError(false);
+                  }
+                }}
+                className="mb-4"
+                onBlur={() => {
+                  if (!password) {
+                    setPasswordError(true);
+                  }
+                }}
+                error={passwordError === true}
               />
-              {error && (
-                <p className="text-left text-red-500 mb-5">{error}</p>
+              {passwordError && (
+                <p className="text-left text-danger mb-5">
+                  Password is required
+                </p>
               )}
-              <Button text="Submit" className='mb-5'/>
+              <Button text="Submit" className="mb-5 text-white" />
             </form>
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

@@ -3,7 +3,7 @@
 import Navbar from "@/ui/Navbar";
 import { useSelector, useDispatch } from "react-redux";
 import Confetti from "react-confetti";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toggleConfetti } from "@/lib/cocktail/cocktailSlice";
 import { useRouter, usePathname } from "next/navigation";
 import { useMediaQuery } from "react-responsive";
@@ -18,15 +18,16 @@ const ClientSideAuth = ({ children }) => {
   const showConfetti = useSelector((state) => state.cocktail.showConfetti);
 
   const isMobile = useMediaQuery({ maxWidth: 767 });
+  const [authChecked, setAuthChecked] = useState(false);
 
   useEffect(() => {
-    if (!isAuthenticated && pathname !== "/login") {
+    if (isAuthenticated && pathname === "/login") {
+      router.push("/cocktails");
+    } else if (!isAuthenticated && pathname !== "/login") {
       router.push("/login");
     }
 
-    if (isAuthenticated && pathname === "/login") {
-      router.push("/cocktails");
-    }
+    setAuthChecked(true);
   }, [isAuthenticated, pathname, router]);
 
   useEffect(() => {
@@ -36,6 +37,10 @@ const ClientSideAuth = ({ children }) => {
       }, 3000);
     }
   }, [showConfetti, dispatch]);
+
+  if (!authChecked) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <>
@@ -47,16 +52,18 @@ const ClientSideAuth = ({ children }) => {
               <Confetti
                 width={window.innerWidth}
                 height={window.innerHeight}
-                numberOfPieces={isMobile ? 100 : 300} 
+                numberOfPieces={isMobile ? 100 : 300}
                 recycle={false}
-                gravity={isMobile ? 0.05 : 0.1} 
+                gravity={isMobile ? 0.05 : 0.1}
                 wind={isMobile ? 0.01 : 0.02}
               />
             )}
             {children}
           </div>
         ) : (
-          <div><Login /></div>
+          <div>
+            <Login />
+          </div>
         )}
       </main>
     </>

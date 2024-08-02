@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -35,7 +35,7 @@ const SavedCocktails = () => {
   };
 
   const calculateShipping = () => {
-    return basketItems.length > 0 ? 5.0 : 0.0; 
+    return basketItems.length > 0 ? 5.0 : 0.0;
   };
 
   const calculateTax = () => {
@@ -55,7 +55,6 @@ const SavedCocktails = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start bg-gradient-to-tr from-red-300 to-yellow-200 pb-20 pt-40 min-h-screen">
       <div className="max-w-4xl w-full bg-white rounded-lg shadow-xl p-10">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-bold">Saved Cocktails</h2>
@@ -146,7 +145,6 @@ const SavedCocktails = () => {
           <p className="text-gray-600">Your cart is empty</p>
         )}
       </div>
-    </div>
   );
 };
 

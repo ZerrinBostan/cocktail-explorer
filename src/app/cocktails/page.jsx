@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
-import Navbar from "@/ui/Navbar";
 import Card from "@/ui/Card";
 import { addToBasket } from "../../lib/cocktail/cocktailSlice";
 
@@ -76,46 +75,43 @@ const Cocktails = () => {
 
   return (
     <>
-      <Navbar />
-      <div className="flex flex-col items-center justify-start bg-gradient-to-tr from-red-300 to-yellow-200 pb-20 pt-40 min-h-screen">
-        {loading && (
-          <p className="text-xl font-bold text-indigo mb-11">Yükleniyor...</p>
-        )}
+      {loading && (
+        <p className="text-xl font-bold text-indigo mb-11">Yükleniyor...</p>
+      )}
 
-        {!loading && !searchQuery && isCocktails && (
-          <h2 className="text-2xl font-bold mb-11 text-indigo">
-            List Most Latest Cocktails
-          </h2>
-        )}
+      {!loading && !searchQuery && isCocktails && (
+        <h2 className="text-2xl font-bold mb-11 text-indigo">
+          List Most Latest Cocktails
+        </h2>
+      )}
 
-        {!loading && !isCocktails && (
-          <div>
-            <div className="flex items-center justify-start">
-              <p className="text-lg font-bold text-gray-800 p-4 rounded-md">
-                Kokteyl bulunamadı
-              </p>
-            </div>
+      {!loading && !isCocktails && (
+        <div>
+          <div className="flex items-center justify-start">
+            <p className="text-lg font-bold text-gray-800 p-4 rounded-md">
+              Kokteyl bulunamadı
+            </p>
           </div>
-        )}
+        </div>
+      )}
 
-        {!loading && (
-          <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:space-y-0 md:px-4">
-            {isCocktails &&
-              cocktails.map((item, index) => (
-                <Card
-                  key={index}
-                  title={item.strDrink}
-                  imgSrc={item.strDrinkThumb}
-                  description={item.strInstructions}
-                  glass={item.strGlass}
-                  category={item.strCategory}
-                  onAddToBasket={() => handleAddToBasket(item)}
-                  onClick={() => handleCardClick(item.strDrink)}
-                />
-              ))}
-          </div>
-        )}
-      </div>
+      {!loading && (
+        <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:space-y-0 md:px-4">
+          {isCocktails &&
+            cocktails.map((item, index) => (
+              <Card
+                key={index}
+                title={item.strDrink}
+                imgSrc={item.strDrinkThumb}
+                description={item.strInstructions}
+                glass={item.strGlass}
+                category={item.strCategory}
+                onAddToBasket={() => handleAddToBasket(item)}
+                onClick={() => handleCardClick(item.strDrink)}
+              />
+            ))}
+        </div>
+      )}
     </>
   );
 };

@@ -3,7 +3,7 @@
 import Navbar from '@/ui/Navbar';
 import { useSelector } from 'react-redux';
 
-const Layout = ({ children }) => {
+const ClientSideAuth = ({ children }) => {
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 
   return (
@@ -22,4 +22,4 @@ const Layout = ({ children }) => {
   );
 };
 
-export default Layout;
+export default ClientSideAuth;

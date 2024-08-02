@@ -18,6 +18,7 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
+    domains: ['www.thecocktaildb.com'],
   },
 };
 

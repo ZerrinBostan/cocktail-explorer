@@ -1,15 +1,16 @@
 "use client";
 
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useRouter } from 'next/navigation';
-import Image from 'next/image'; 
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 import {
   decreaseQuantity,
   increaseQuantity,
   removeFromBasket,
-} from '@/lib/cocktail/cocktailSlice';
-import Button from '@/ui/Button';
+  toggleConfetti,
+} from "@/lib/cocktail/cocktailSlice";
+import Button from "@/ui/Button";
 
 const SavedCocktails = () => {
   const basketItems = useSelector((state) => state.cocktail.basket);
@@ -29,20 +30,24 @@ const SavedCocktails = () => {
   };
 
   const handleBackToProducts = () => {
-    router.push('/cocktails');
+    router.push("/cocktails");
+  };
+
+  const handlePayment = () => {
+    dispatch(toggleConfetti(true));
   };
 
   return (
-    <div className="max-w-4xl w-full bg-white rounded-lg shadow-xl p-10">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold">Saved Cocktails</h2>
-
+    <div className="max-w-5xl w-full bg-white rounded-lg shadow-xl p-10">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
         <button
-          className="text-indigo-600 hover:text-indigo-500 font-medium"
+          className="text-indigo-600 hover:text-indigo-500 font-medium mb-2 md:mb-0 md:order-2 md:ml-4"
           onClick={handleBackToProducts}
         >
           &larr; Turn back
         </button>
+
+        <h2 className="text-2xl font-bold md:order-1">Saved Cocktails</h2>
       </div>
 
       {basketItems.length > 0 ? (
@@ -50,9 +55,9 @@ const SavedCocktails = () => {
           {basketItems.map((item, index) => (
             <div
               key={index}
-              className="flex items-center justify-between bg-gray-100 rounded-lg p-4"
+              className="flex flex-col sm:flex-row items-center justify-between bg-gray-100 rounded-lg p-4"
             >
-              <div className="flex items-center space-x-4">
+              <div className="flex flex-col sm:flex-row items-center space-x-4">
                 <Image
                   src={item.strDrinkThumb}
                   alt={item.strDrink}
@@ -60,15 +65,15 @@ const SavedCocktails = () => {
                   height={64}
                   className="rounded-lg object-cover"
                 />
-                <div>
+                <div className="mt-2 sm:mt-0 text-center sm:text-left">
                   <h3 className="text-lg font-bold">{item.strDrink}</h3>
                   <p className="text-gray-600">
                     {item.strGlass} - {item.strCategory}
                   </p>
                 </div>
               </div>
-              <div className="flex items-center space-x-4">
-                <div className="flex items-center justify-between mt-2">
+              <div className="flex items-center space-x-4 mt-2 sm:mt-0">
+                <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2 text-gray-400 me-4">
                     <button
                       onClick={() => handleDecreaseQuantity(item)}
@@ -115,7 +120,7 @@ const SavedCocktails = () => {
             <Button
               text="Continue to Payment"
               className="text-black bg-teal-100 hover:bg-teal-700 hover:text-teal-100 border-teal-600"
-              onClick={() => console.log('Payment process')}
+              onClick={handlePayment}
             />
           </div>
         </div>

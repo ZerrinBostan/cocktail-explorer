@@ -1,8 +1,20 @@
 import React from 'react';
 
-const Button = ({ text }) => {
+const sizeClasses = {
+  xsmall: 'py-4 px-5 text-sm',
+  small: 'py-4 text-sm',
+  medium: 'px-6 py-5 text-sm',
+  large: 'px-5 py-3 text-base',
+};
+
+const Button = ({ text, size = 'medium', className = '', onClick}) => {
+  const sizeClass = sizeClasses[size] || sizeClasses.medium;
+
   return (
-    <button className="w-full px-6 py-5 mb-5 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-purple-blue-600 focus:ring-4 focus:ring-purple-blue-100 bg-indigo">
+    <button
+      className={`w-full ${sizeClass} font-bold leading-none text-white transition duration-300 rounded-2xl hover:bg-purple-blue-600 focus:ring-4 focus:ring-purple-blue-100 bg-indigo ${className}`}
+      onClick={onClick}
+   >
       {text}
     </button>
   );

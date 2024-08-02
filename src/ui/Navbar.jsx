@@ -2,16 +2,20 @@
 
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation"; 
+import { FiLogOut } from "react-icons/fi"; 
 import Button from "./Button";
 import Link from "next/link";
 import Input from "./Input";
 import Image from "next/image";
 import { setSearchQuery } from "../lib/cocktail/cocktailSlice";
 import Dropdown from "./Dropdown";
+import { logout } from "../lib/auth/user"; 
 
 const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const debounce = (func, delay) => {
     let timeout;
@@ -25,13 +29,18 @@ const Navbar = () => {
 
   const debounceDispatch = debounce((value) => {
     dispatch(setSearchQuery(value));
-  }, 3000);
+  }, 2000);
 
   const handleSearch = (e) => {
     const value = e.target.value;
     setSearchTerm(value);
 
     debounceDispatch(value); 
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    router.push('/login'); 
   };
 
   return (
@@ -65,7 +74,13 @@ const Navbar = () => {
           </div>
           <div className="flex items-center justify-end gap-3">
             <Dropdown />
-            <Button text="Çıkış Yap" onClick={() => console.log("Çıkış yapıldı")} size="xsmall" />
+            <button 
+              onClick={handleLogout} 
+              className="text-gray-600 hover:text-gray-900"
+              aria-label="Çıkış Yap"
+            >
+              <FiLogOut size={24} />
+            </button>
           </div>
         </div>
       </div>

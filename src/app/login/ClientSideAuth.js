@@ -11,7 +11,7 @@ const Layout = ({ children }) => {
       {isAuthenticated && <Navbar />}
       <main>
         {isAuthenticated ? (
-          <div className="flex flex-col items-center justify-center bg-gradient-to-tr from-red-300 to-yellow-200 min-h-screen py-10">
+          <div className="flex flex-col items-center justify-center bg-gradient-to-tr from-red-300 to-yellow-200 min-h-screen py-36">
             {children}
           </div>
         ) : (

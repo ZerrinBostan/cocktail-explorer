@@ -1,11 +1,13 @@
 import React from 'react';
 
-const Input = ({ id, type, placeholder, value, onChange, error }) => {
+const Input = ({ id, type, placeholder, value, onChange, error, showLabel = true, ...props }) => {
   return (
-    <div className="flex flex-col mb-7">
-      <label htmlFor={id} className="mb-2 text-sm text-start text-grey-900">
-        {id.charAt(0).toUpperCase() + id.slice(1)}*
-      </label>
+    <div className="flex flex-col" {...props}>
+      {showLabel && (
+        <label htmlFor={id} className="flex flex-col mb-2 text-sm text-left text-grey-900">
+          {id.charAt(0).toUpperCase() + id.slice(1)}*
+        </label>
+      )}
       <input
         id={id}
         type={type}

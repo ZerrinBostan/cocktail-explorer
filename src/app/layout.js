@@ -1,11 +1,9 @@
 'use client';
 import { Inter } from 'next/font/google';
 
-import { PersistGate } from 'redux-persist/integration/react';
-import { persistor } from '../lib/store';
 import StoreProvider from './StoreProvider';
 
-import ClientSideAuth from './login/ClientSideAuth';
+import LayoutContent from './LayoutContent';
 import '../styles/globals.scss';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -23,11 +21,9 @@ const Layout = ({ children }) => {
         <meta name="description" content={metadata.description} />
       </head>
       <body className={inter.className}>
-        <PersistGate loading={null} persistor={persistor}>
           <StoreProvider>
-            <ClientSideAuth>{children}</ClientSideAuth>
+            <LayoutContent>{children}</LayoutContent>
           </StoreProvider>
-        </PersistGate>
       </body>
     </html>
   );

@@ -11,6 +11,7 @@ import {
   toggleConfetti,
 } from "@/lib/cocktail/cocktailSlice";
 import Button from "@/ui/Button";
+import BackButton from "@/ui/BackButton";
 
 const SavedCocktails = () => {
   const basketItems = useSelector((state) => state.cocktail.basket);
@@ -30,7 +31,7 @@ const SavedCocktails = () => {
   };
 
   const handleBackToProducts = () => {
-    router.push("/cocktails");
+    router.push("/");
   };
 
   const handlePayment = () => {
@@ -40,12 +41,7 @@ const SavedCocktails = () => {
   return (
     <div className="max-w-5xl w-full bg-white rounded-lg shadow-xl p-10">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
-        <button
-          className="text-indigo-600 hover:text-indigo-500 font-medium mb-2 md:mb-0 md:order-2 md:ml-4"
-          onClick={handleBackToProducts}
-        >
-          &larr; Turn back
-        </button>
+        <BackButton />
 
         <h2 className="text-2xl font-bold md:order-1">Saved Cocktails</h2>
       </div>

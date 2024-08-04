@@ -2,16 +2,17 @@
 
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useRouter } from "next/navigation"; 
-import { FiLogOut } from "react-icons/fi"; 
+import { useRouter } from "next/navigation";
+import { FiLogOut } from "react-icons/fi";
 import Button from "./Button";
 import Link from "next/link";
 import Input from "./Input";
 import Image from "next/image";
 import { setSearchQuery } from "../lib/cocktail/cocktailSlice";
 import Dropdown from "./Dropdown";
-import { logout } from "../lib/auth/user"; 
 import { useMediaQuery } from "react-responsive";
+import { logout } from "@/app/auth/authControl";
+
 
 const Navbar = () => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
@@ -38,12 +39,7 @@ const Navbar = () => {
     const value = e.target.value;
     setSearchTerm(value);
 
-    debounceDispatch(value); 
-  };
-
-  const handleLogout = () => {
-    dispatch(logout());
-    router.push('/login'); 
+    debounceDispatch(value);
   };
 
   return (
@@ -51,7 +47,7 @@ const Navbar = () => {
       <div className="px-4">
         <div className="flex items-center justify-between">
           <div className="flex shrink-0">
-            <Link aria-current="page" className="flex items-center" href="/cocktails">
+            <Link aria-current="page" className="flex items-center" href="/">
               <Image
                 className="h-7 w-auto"
                 src="https://cdn-icons-png.flaticon.com/512/5873/5873604.png"
@@ -60,25 +56,27 @@ const Navbar = () => {
                 height={28}
                 priority={true}
               />
-                {!isMobile && <p>Cocktails Explorer</p>}
+              {!isMobile && <p>Cocktails Explorer</p>}
             </Link>
           </div>
-          <div className="md:flex md:items-center md:justify-center md:gap-5">
-            <Input
-              id="search"
-              type="text"
-              placeholder="Kokteyl Ara..."
-              value={searchTerm}
-              onChange={handleSearch}
-              error={false}
-              showLabel={false}
-              className="cocktail-search"
-            />
-          </div>
+
+          <Input
+            id="search"
+            showLabel={false}
+            name="search"
+            type="search"
+            value={searchTerm}
+            onChange={handleSearch}
+            error={false}
+            className="cocktail-search lg:w-96"
+          />
+
           <div className="flex items-center justify-end gap-3">
             <Dropdown />
-            <button 
-              onClick={handleLogout} 
+            <button
+              onClick={async () => {
+                await logout();
+              }}
               className="text-gray-600 hover:text-gray-900"
               aria-label="Çıkış Yap"
             >

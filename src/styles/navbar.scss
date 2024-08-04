@@ -1,12 +1,5 @@
 $border-color: #3c4780;
 
 .cocktail-search {
-    @media (min-width: 1000px) {
-        input {
-            border: 1px solid $border-color;;
-            min-width: 500px;
-            max-width: 600px;
-            width: 100%;
-        }
-    }
+    border: 1px solid $border-color;
 }

@@ -1,6 +1,18 @@
-<<<<<<< HEAD
-# cocktail-explorer
-=======
+# Cocktail Explorer
+
+Cocktail Explorer is a web application developed using **Next.js 14** and **React 18**. This project includes various adjustments for user authentication processes.
+
+## Project Overview
+
+- **Authentication:** The user authentication system is developed using a combination of Next.js and React. **Vercel PostgreSQL** is utilized for this setup.
+
+- **Cookie and Session Management:** Cookies and session configurations have been implemented to ensure secure user sessions.
+
+- **Components:** Both Server Side and Client Side components have been prepared, allowing the application to adapt to various scenarios and user interactions.
+
+- **State Management:** The application uses **Redux** for state management across the app. Redux ensures consistent and easy management of states between components.
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -37,4 +49,3 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
->>>>>>> eaf25fd (Initial commit from Create Next App)

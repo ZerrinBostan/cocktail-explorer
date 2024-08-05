@@ -16,7 +16,7 @@ const CocktailDetailPage = async ({ params }) => {
 
   return (
     <>
-      <div className="bg-white shadow-lg rounded-lg max-w-5xl w-full mx-auto flex flex-col md:flex-row">
+      <div className="bg-white shadow-lg rounded-lg max-w-5xl w-full mx-auto flex flex-col md:flex-row xs:mx-5">
         <div className="md:w-1/2 p-10">
           <Image
             src={cocktail.strDrinkThumb}

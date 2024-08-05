@@ -2,4 +2,8 @@ $border-color: #3c4780;
 
 .cocktail-search {
     border: 1px solid $border-color;
+
+    @media (max-width: 768px) {
+        height: 2rem;
+    }
 }

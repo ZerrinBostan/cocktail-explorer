@@ -7,17 +7,18 @@ const sizeClasses = {
   large: 'px-5 py-3 text-base',
 };
 
-const Button = React.forwardRef(({ text, size = 'medium', className = '', onClick, ...props}, ref) => {
+const Button = React.forwardRef(({ text, size = 'medium', className = '', onClick, loading=false, ...props}, ref) => {
   const sizeClass = sizeClasses[size] || sizeClasses.medium;
-
+  const isloading = loading === true ? 'Loading...' : text
   return (
     <button
       className={`w-full ${sizeClass} font-bold leading-none text-black transition duration-300 rounded-2xl bg-indigo hover:bg-purple-blue-600 hover:text-white focus:ring-4 focus:ring-purple-blue-100 ${className}`}
       onClick={onClick}
       ref={ref}
       {...props}
+      disabled={loading}
     >
-      {text}
+      {isloading}
     </button>
   );
 });

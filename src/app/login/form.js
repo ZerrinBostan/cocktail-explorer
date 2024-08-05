@@ -9,7 +9,7 @@ export function LoginForm() {
   const [state, action] = useFormState(login, undefined);
 
   return (
-    <div className="flex items-center justify-center w-full lg:p-12">
+    <div className="login-form flex items-center justify-center lg:p-12">
       <div className="flex items-center xl:p-10">
         <form action={action} className="flex flex-col w-full h-full md:w-96 pb-6 text-center rounded-3xl">
           <div className="flex flex-col gap-2">
@@ -55,6 +55,6 @@ export function LoginButton() {
   const { pending } = useFormStatus();
 
   return (
-    <Button text="Submit" className="mb-5 text-white" aria-disabled={pending} />
+    <Button text="Submit" className="mb-5 text-white" loading={pending} />
   );
 }

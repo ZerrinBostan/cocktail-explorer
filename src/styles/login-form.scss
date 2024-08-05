@@ -1,0 +1,7 @@
+.login-form {
+    div:first-child {
+        @media (max-width: 768px) {
+            width: 21rem;
+        }
+    }
+}
